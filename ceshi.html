@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青春疗愈馆</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: '微软雅黑', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffb6c1 0%, #87cefa 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            padding: 30px 0;
+        }
+
+        .input-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        #userInput {
+            width: 70%;
+            padding: 12px;
+            border: 2px solid white;
+            border-radius: 25px;
+            font-size: 16px;
+            margin-right: 10px;
+            background: rgba(255,255,255,0.8);
+        }
+
+        button {
+            padding: 12px 25px;
+            background: #ff69b4;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #ff1493;
+            transform: scale(1.05);
+        }
+
+        .result-section {
+            display: none;
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .therapy-item {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 15px;
+        }
+
+        .therapy-item img {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        @media (max-width: 768px) {
+            #userInput {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .therapy-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .therapy-item img {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌸 青春疗愈时光机 🌸</h1>
+            <p>输入你的烦恼，回到青春期的美好时光</p>
+        </div>
+
+        <div class="input-section">
+            <input type="text" id="userInput" placeholder="写下你最近的烦恼...">
+            <button onclick="generateTherapy()">生成治愈方案</button>
+        </div>
+
+        <div class="result-section" id="resultSection">
+            <div id="therapyContent"></div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="tryAgain()" style="background: #20b2aa;">再试一次</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const therapies = [
+            {
+                type: '音乐',
+                title: '🎵 周杰伦《晴天》时刻',
+                desc: '打开音乐播放器，单曲循环这首青春主题曲，跟着旋律轻轻哼唱，回忆学生时代那个让你心跳加速的人',
+                img: 'https://source.unsplash.com/random/800x600/?music,concert'
+            },
+            {
+                type: '电影',
+                title: '🎬 《怦然心动》观影夜',
+                desc: '准备一包薯片和奶茶，重温这部纯爱经典，跟着朱莉和布莱斯重新体验青涩的初恋感觉',
+                img: 'https://source.unsplash.com/random/800x600/?movie,theater'
+            },
+            {
+                type: '时尚',
+                title: '👗 2000年代复古穿搭',
+                desc: '找出你的阔腿牛仔裤+帆布鞋+格子衬衫，戴上彩色发夹，来一次千禧年复古造型自拍',
+                img: 'https://source.unsplash.com/random/800x600/?fashion,2000s'
+            }
+        ];
+
+        function generateTherapy() {
+            const userInput = document.getElementById('userInput').value;
+            if (!userInput) {
+                alert('请先写下你的烦恼哦~');
+                return;
+            }
+
+            const resultSection = document.getElementById('resultSection');
+            const contentDiv = document.getElementById('therapyContent');
+            contentDiv.innerHTML = '';
+
+            // 随机选择3个治愈方案
+            therapies.sort(() => Math.random() - 0.5);
+            therapies.slice(0, 3).forEach(item => {
+                contentDiv.innerHTML += `
+                    <div class="therapy-item">
+                        <img src="${item.img}" alt="${item.type}">
+                        <div>
+                            <h3>${item.title}</h3>
+                            <p>${item.desc}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultSection.style.display = 'block';
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        function tryAgain() {
+            document.getElementById('userInput').value = '';
+            document.getElementById('resultSection').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
